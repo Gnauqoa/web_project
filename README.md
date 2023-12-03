@@ -7,7 +7,7 @@
 From your terminal:
 
 ```sh
-docker run --rm --publish 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=databasename postgres
+docker run --rm --publish 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=web-project postgres
 ```
 
 This starts your postgresql.
