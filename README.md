@@ -22,7 +22,7 @@ This init your postgres database with prisma.
 npx prisma db seed
 ```
 
-This create example data for your app
+This create example data for your app with admin account is kody@kcd.dev | 123456
 
 ```sh
 npm run dev
