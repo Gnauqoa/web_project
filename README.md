@@ -12,7 +12,17 @@ docker run --rm --publish 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGR
 
 This starts your postgresql.
 
-From your terminal:
+```sh
+npx prisma migrate dev
+```
+
+This init your postgres database with prisma.
+
+```sh
+npx prisma db seed
+```
+
+This create example data for your app
 
 ```sh
 npm run dev
