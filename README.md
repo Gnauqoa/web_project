@@ -1,8 +1,16 @@
-# Welcome to Remix!
+# Welcome to Remix template by Gnauqoa!
 
 - [Remix Docs](https://remix.run/docs)
 
 ## Development
+
+From your terminal:
+
+```sh
+docker run --rm --publish 5432:5432 -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_DB=databasename postgres
+```
+
+This starts your postgresql.
 
 From your terminal:
 
