@@ -2,16 +2,16 @@ import fs from "fs";
 import { faker } from "@faker-js/faker";
 import { createPassword, createUser } from "tests/db-utils";
 import { prisma } from "~/utils/db.server";
-import { deleteAllData } from "tests/setup/utils";
 import { getPasswordHash } from "~/utils/auth.server";
+
 
 async function seed() {
   console.log("🌱 Seeding...");
   console.time(`🌱 Database has been seeded`);
-
   console.time("🧹 Cleaned up the database...");
-  // deleteAllData();
+  // await prisma.$queryRaw`"TRUNCATE TABLE table_name RESTART IDENTITY CASCADE"`;
   console.timeEnd("🧹 Cleaned up the database...");
+
   console.time(
     `🐨 Created user "kody" with the email "kody@kcd.dev" and the password "123456" and admin role`
   );
@@ -37,6 +37,7 @@ async function seed() {
   console.timeEnd(
     `🐨 Created user "kody" with the password "123456" and admin role`
   );
+
   const totalUsers = 40;
   console.time(`👤 Created ${totalUsers} users...`);
   const users = await Promise.all(
