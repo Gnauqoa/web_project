@@ -10,10 +10,10 @@ async function seed() {
   console.time(`🌱 Database has been seeded`);
 
   console.time("🧹 Cleaned up the database...");
-  deleteAllData();
+  // deleteAllData();
   console.timeEnd("🧹 Cleaned up the database...");
   console.time(
-    `🐨 Created user "kody" with the password "123456" and admin role`
+    `🐨 Created user "kody" with the email "kody@kcd.dev" and the password "123456" and admin role`
   );
   await prisma.user.create({
     data: {
