@@ -8,7 +8,10 @@ const Main = () => {
       <div className="fixed top-0 w-full z-20">
         <ResponsiveAppBar />
       </div>
-      <div className="flex flex-row w-full pt-[68.5px] z-10">
+      <div
+        className="flex flex-row w-full pt-[68.5px] z-10 h-screen"
+        style={{ minHeight: "calc(100vh - 68,5px)" }}
+      >
         <Outlet />
         <QuestionDetail />
       </div>

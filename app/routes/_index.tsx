@@ -21,7 +21,7 @@ export const loader = async ({ request }: ActionFunctionArgs) => {
 const Home = () => {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="flex flex-col w-full border-x-[1px] border-gray-300">
+    <div className="flex flex-col w-full border-x-[1px] border-gray-300 h-full">
       <QuestionEditor editorType={EditorType.new} />
       {data.questions.map((question) => (
         <Question key={question.id} question={question} />
