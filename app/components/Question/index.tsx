@@ -1,10 +1,10 @@
 import { Prisma } from "@prisma/client";
 import { type SerializeFrom } from "@remix-run/node";
 import Content from "../Content";
-import AnswerEditor from "./AddAnswer";
-import { EditorType } from "../Editor";
-import Answers from "./Answers";
 import { useState } from "react";
+import { Button } from "@mui/material";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
 export const questionSelect: Prisma.QuestionSelect = {
   id: true,
@@ -42,22 +42,19 @@ export type QuestionComponentType = SerializeFrom<
 >;
 
 const Question = ({ question }: { question: QuestionComponentType }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(question);
+  const [currentQuestion] = useState(question);
   if (!currentQuestion) return <></>;
   return (
     <div className="flex flex-col w-full p-4 gap-2 border-b-[1px] border-gray-300">
       <Content content={currentQuestion} />
-      <AnswerEditor
-        onSuccess={(data) =>
-          setCurrentQuestion((prev) => ({
-            ...prev,
-            answers: [data, ...prev.answers],
-          }))
-        }
-        parentId={currentQuestion.id}
-        editorType={EditorType.new}
-      />
-      <Answers answers={currentQuestion.answers} />
+      <div className="flex flex-row items-center">
+        <Button sx={{ border: 0, borderRadius: 0, width: "100%" }}>
+          <FavoriteBorderIcon />
+        </Button>
+        <Button sx={{ border: 0, borderRadius: 0, width: "100%" }}>
+          <ChatBubbleOutlineIcon />
+        </Button>
+      </div>
     </div>
   );
 };
