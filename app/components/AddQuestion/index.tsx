@@ -70,7 +70,7 @@ const QuestionEditor = ({
     <fetcher.Form
       method="post"
       action={`/resources/questions/edit`}
-      className="flex w-full flex-col gap-2"
+      className="flex w-full flex-col gap-2 px-4"
       {...form.props}
     >
       {loading && (
@@ -84,10 +84,10 @@ const QuestionEditor = ({
           value: value,
           onChange: (e) => setValue(e.currentTarget.value),
           name: "content",
-          placeholder: "Trả lời",
+          placeholder: "Hỏi",
         }}
         errors={fields.content.errors?.filter(Boolean)}
-        labelSubmit={editorType === EditorType.edit ? "Đáp" : "Trả lời"}
+        labelSubmit={editorType === EditorType.edit ? "Lưu" : "Hỏi"}
       />
     </fetcher.Form>
   );

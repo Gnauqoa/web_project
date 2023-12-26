@@ -21,7 +21,7 @@ const InlineEditor = ({
   }, [textArea]);
   return (
     <div
-      className="flex flex-col gap-4 px-6 py-3"
+      className="flex flex-col gap-4 py-3"
       onClick={() => {
         if (textArea) textArea.current?.focus();
       }}
@@ -30,7 +30,7 @@ const InlineEditor = ({
         <TextareaAutosize
           {...inputProps}
           ref={textArea}
-          className={"w-full text-sm outline-none transition-colors"}
+          className={"w-full text-sm outline-none transition-colors px-3 py-2"}
         />
         {errors &&
           errors.map((error, index) => (
@@ -45,7 +45,13 @@ const InlineEditor = ({
             Hủy
           </Button>
         )}
-        <Button type="submit">{labelSubmit}</Button>
+        <Button
+          variant="contained"
+          sx={{ textTransform: "none" }}
+          type="submit"
+        >
+          {labelSubmit}
+        </Button>
       </div>
     </div>
   );
