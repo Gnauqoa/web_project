@@ -4,14 +4,16 @@ import { Question } from "~/components";
 import QuestionEditor from "~/components/AddQuestion";
 import { EditorType } from "~/components/Editor";
 import { questionSelect } from "~/components/Question";
+import { getUserId } from "~/utils/auth.server";
 import { prisma } from "~/utils/db.server";
 
 export const shouldRevalidate: ShouldRevalidateFunction = () => false;
 
 export const loader = async ({ request }: ActionFunctionArgs) => {
+  const userId = await getUserId(request);
   const questions = await prisma.question.findMany({
     orderBy: { createdAt: "desc" },
-    select: questionSelect,
+    select: questionSelect(userId || ""),
   });
   return json({ questions });
 };

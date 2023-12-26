@@ -11,11 +11,11 @@ export const action = async ({ request, params }: DataFunctionArgs) => {
   const questionId = params.questionId;
   const question = await prisma.question.findUnique({
     where: { id: questionId },
-    select: { VoteQuestion: { where: { userId }, select: { id: true } } },
+    select: { votedBy: { where: { userId }, select: { id: true } } },
   });
-  if (question?.VoteQuestion.length) {
+  if (question?.votedBy.length) {
     await prisma.voteQuestion.delete({
-      where: { id: question.VoteQuestion[0].id },
+      where: { id: question.votedBy[0].id },
     });
 
     return json(
@@ -24,7 +24,7 @@ export const action = async ({ request, params }: DataFunctionArgs) => {
         submission: await prisma.question.update({
           where: { id: questionId },
           data: { vote: { decrement: 1 } },
-          select: questionSelect,
+          select: questionSelect(userId),
         }),
       },
       {

@@ -1,6 +1,6 @@
 import { Outlet } from "@remix-run/react";
 import ResponsiveAppBar from "./Appbar";
-import QuestionDetail from "~/components/QuestionDetail";
+import QuestionDetail from "./QuestionDetail";
 
 const Main = () => {
   return (

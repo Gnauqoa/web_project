@@ -15,16 +15,16 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   const questionId = params.questionId;
   const question = await prisma.question.findUnique({
     where: { id: questionId },
-    select: { VoteQuestion: { where: { userId } } },
+    select: { votedBy: { where: { userId } } },
   });
-  if (!question?.VoteQuestion.length) {
+  if (!question?.votedBy.length) {
     await prisma.voteQuestion.create({
       data: { questionId, userId },
     });
     const question = await prisma.question.update({
       where: { id: questionId },
       data: { vote: { increment: 1 }, interactedAt: new Date() },
-      select: questionSelect,
+      select: questionSelect(userId),
     });
 
     return json(

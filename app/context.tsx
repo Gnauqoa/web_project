@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { QuestionDetailContextProvider } from "./components/QuestionDetail/Context";
+import { QuestionDetailContextProvider } from "./layout/main/QuestionDetail/Context";
 
 const ContextProvider = ({ children }: { children: ReactNode }) => {
   return (

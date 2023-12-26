@@ -4,7 +4,7 @@ import React, {
   useState,
   type Dispatch,
 } from "react";
-import { type AnswerComponentType } from "../Answer";
+import { type AnswerComponentType } from "~/components/Answer";
 import useFetcher from "~/hooks/useFetcher";
 import useToggle from "~/hooks/useToggle";
 // Define the ContextType
