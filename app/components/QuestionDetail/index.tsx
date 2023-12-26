@@ -1,9 +1,7 @@
+import Desktop from "./Desktop";
+
 const QuestionDetail = () => {
-  return(
-    <div className="flex flex-col">
+  return <Desktop />;
+};
 
-    </div>
-  )
-}
-
-export default QuestionDetail
+export default QuestionDetail;
