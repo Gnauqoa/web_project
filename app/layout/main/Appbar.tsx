@@ -13,8 +13,13 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useOptionalUser } from "~/utils/user";
 import { getUserImgSrc } from "~/utils/misc";
+import { useNavigate } from "@remix-run/react";
+import { PATH_PAGE } from "~/config/path";
 
-const pages = ["Questions", "Answers"];
+const pages = [
+  { title: "Questions", path: PATH_PAGE.user.question },
+  { title: "Answers", path: PATH_PAGE.user.answer },
+];
 const settings = ["Logout"];
 
 function ResponsiveAppBar() {
@@ -25,7 +30,7 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-
+  const navigate = useNavigate();
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -44,24 +49,29 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="static" sx={{ px: 2 }}>
       <Toolbar disableGutters>
-        <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-        <Typography
-          variant="h6"
-          noWrap
-          component="a"
-          href="#app-bar-with-responsive-menu"
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
+        <div
+          onClick={() => navigate(PATH_PAGE.root)}
+          className="flex flex-row items-center"
         >
-          LOGO
-        </Typography>
+          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            LOGO
+          </Typography>
+        </div>
 
         <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
           <IconButton
@@ -94,9 +104,15 @@ function ResponsiveAppBar() {
             }}
           >
             {pages.map((page) => (
-              <MenuItem key={page} onClick={handleCloseNavMenu}>
+              <MenuItem
+                key={page.title}
+                onClick={() => {
+                  navigate(page.path(user?.id || ""));
+                  handleCloseNavMenu();
+                }}
+              >
                 <Typography textTransform={"none"} textAlign="center">
-                  {page}
+                  {page.title}
                 </Typography>
               </MenuItem>
             ))}
@@ -124,8 +140,11 @@ function ResponsiveAppBar() {
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
           {pages.map((page) => (
             <Button
-              key={page}
-              onClick={handleCloseNavMenu}
+              key={page.title}
+              onClick={() => {
+                navigate(page.path(user?.id || ""));
+                handleCloseNavMenu();
+              }}
               sx={{
                 textTransform: "none",
                 my: 2,
@@ -133,7 +152,7 @@ function ResponsiveAppBar() {
                 display: "block",
               }}
             >
-              {page}
+              {page.title}
             </Button>
           ))}
         </Box>
