@@ -5,21 +5,28 @@ import {
   type QuestionDetailContextType,
 } from "../Context";
 import { CircularProgress } from "@mui/material";
+import { EditorType } from "~/components/Editor";
+import AnswerEditor from "~/components/Question/AddAnswer";
 
 const Desktop = () => {
-  const { loading } = useContext(
+  const { loading, questionId, answers } = useContext(
     QuestionDetailContext
   ) as QuestionDetailContextType;
 
   return (
     <div className="max-w-[20vw] min-w-[20vw]">
       <div className="flex flex-col max-w-[20vw] min-w-[20vw] h-screen fixed pt-4">
-        {loading ? (
+        {loading || !answers.length ? (
           <div className="flex flex-col items-center">
             <CircularProgress />
           </div>
         ) : (
-          <Answers />
+          <div className="flex flex-col w-full">
+            <div className="px-4">
+              <AnswerEditor parentId={questionId} editorType={EditorType.new} />
+            </div>
+            <Answers />
+          </div>
         )}
       </div>
     </div>

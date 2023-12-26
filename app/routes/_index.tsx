@@ -1,10 +1,12 @@
 import { json, type ActionFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { type ShouldRevalidateFunction, useLoaderData } from "@remix-run/react";
 import { Question } from "~/components";
 import QuestionEditor from "~/components/AddQuestion";
 import { EditorType } from "~/components/Editor";
 import { questionSelect } from "~/components/Question";
 import { prisma } from "~/utils/db.server";
+
+export const shouldRevalidate: ShouldRevalidateFunction = () => false;
 
 export const loader = async ({ request }: ActionFunctionArgs) => {
   const questions = await prisma.question.findMany({

@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { type AnswerComponentType } from "../Answer";
 import useFetcher from "~/hooks/useFetcher";
+import useToggle from "~/hooks/useToggle";
 // Define the ContextType
 export type QuestionDetailContextType = {
   questionId: string;
@@ -14,6 +15,8 @@ export type QuestionDetailContextType = {
   loading: boolean;
   getAnswers: (questionId: string) => void;
   setAnswers: Dispatch<React.SetStateAction<AnswerComponentType[]>>;
+  handleClose: () => void;
+  open: boolean;
 };
 
 // Create the initial context value
@@ -24,6 +27,8 @@ const initialContextValue: QuestionDetailContextType = {
   loading: false,
   getAnswers: () => {},
   setAnswers: () => {},
+  open: false,
+  handleClose: () => {},
 };
 
 // Create the QuestionDetailContext
@@ -37,6 +42,7 @@ export const QuestionDetailContextProvider = ({
   children: ReactNode;
 }) => {
   const [questionId, setQuestionId] = useState("");
+  const { toggle: open, handleOpen, handleClose } = useToggle({});
   const [answers, setAnswers] = useState<AnswerComponentType[]>([]);
   const { loading, handleSubmitWithData } = useFetcher<{
     data: { items: AnswerComponentType[] };
@@ -49,6 +55,8 @@ export const QuestionDetailContextProvider = ({
     },
   });
   const getAnswers = (questionId: string) => {
+    handleOpen();
+    setQuestionId(questionId);
     handleSubmitWithData({
       _action: `/resources/questions/${questionId}/answers`,
     });
@@ -57,6 +65,8 @@ export const QuestionDetailContextProvider = ({
     <QuestionDetailContext.Provider
       value={{
         questionId,
+        handleClose,
+        open,
         setQuestionId,
         answers,
         setAnswers,

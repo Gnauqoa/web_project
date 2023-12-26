@@ -1,8 +1,11 @@
 import { type ActionFunctionArgs } from "@remix-run/node";
+import { type ShouldRevalidateFunction } from "@remix-run/react";
 import { answerSelect } from "~/components/Answer";
 import { StatusResponse } from "~/hooks/useFetcher";
 import { prisma } from "~/utils/db.server";
 import { invariantResponse } from "~/utils/misc";
+
+export const shouldRevalidate: ShouldRevalidateFunction = () => false;
 
 export const loader = async ({ params }: ActionFunctionArgs) => {
   const questionId = params.questionId;
