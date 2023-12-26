@@ -29,7 +29,7 @@ export default function App() {
       </head>
       <body
         className={
-          "h-screen w-full overflow-auto bg-background text-foreground"
+          "w-full overflow-auto bg-background text-foreground"
         }
       >
         <MUIThemeProvider>
