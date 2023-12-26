@@ -15,13 +15,16 @@ const Desktop = () => {
 
   return (
     <div className="max-w-[20vw] min-w-[20vw]">
-      <div className="flex flex-col max-w-[20vw] min-w-[20vw] h-screen fixed pt-4">
+      <div
+        style={{ height: "calc(100vh - 68.5px)" }}
+        className="flex flex-col max-w-[20vw] min-w-[20vw] fixed pt-4"
+      >
         {loading || !answers.length ? (
           <div className="flex flex-col items-center">
             <CircularProgress />
           </div>
         ) : (
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full h-full overflow-y-auto">
             <div className="px-4">
               <AnswerEditor
                 onSuccess={(data) => setAnswers((items) => [data, ...items])}
