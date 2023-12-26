@@ -14,6 +14,7 @@ export const answerSelect = (userId?: string) => {
         avatarId: true,
       },
     },
+    vote: true,
     votedBy: userId ? { where: { userId }, select: { id: true } } : false,
     createdAt: true,
   } as Prisma.AnswerSelect;
