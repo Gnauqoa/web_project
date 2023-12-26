@@ -39,7 +39,6 @@ const Question = ({ question }: { question: QuestionComponentType }) => {
     <div className="flex flex-col w-full p-4 gap-2 border-b-[1px] border-gray-300">
       <Content content={currentQuestion} />
       <div className="flex flex-row items-center">
-        <Comment questionId={currentQuestion.id} />
         <Vote
           type={ContentEnum.question}
           id={question.id}
@@ -47,6 +46,7 @@ const Question = ({ question }: { question: QuestionComponentType }) => {
           totalVote={question.vote}
           votedBy={question.votedBy.map((v) => v.userId)}
         />
+        <Comment questionId={currentQuestion.id} />
       </div>
     </div>
   );

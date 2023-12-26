@@ -3,7 +3,7 @@ import { ContentEnum } from "~/types/content";
 import { type QuestionComponentType } from ".";
 import { type AnswerComponentType } from "../Answer";
 import useFetcher from "~/hooks/useFetcher";
-import { IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -46,17 +46,14 @@ const Vote = ({
     handleClick();
   };
   return (
-    <div className="flex flex-row items-center gap-1">
-      <IconButton
-        disabled={loading}
-        onClick={handleButtonClick}
-        type="button"
-        className="p-0"
-      >
-        {vote ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      </IconButton>
+    <Button
+      disabled={loading}
+      onClick={handleButtonClick}
+      sx={{ border: 0, borderRadius: 0, width: "100%" }}
+    >
+      {vote ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       {!!totalVote && <p className="text-md text-primary-v2">{totalVote}</p>}
-    </div>
+    </Button>
   );
 };
 
