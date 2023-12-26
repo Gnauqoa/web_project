@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { ContentEnum } from "~/types/content";
-import { type QuestionComponentType } from ".";
+import { type QuestionComponentType } from "../Question";
 import { type AnswerComponentType } from "../Answer";
 import useFetcher from "~/hooks/useFetcher";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
@@ -29,7 +29,7 @@ const Vote = ({
   const [totalVote, setTotalVote] = useState<number>(_totalVote || 0);
   const { handleSubmit, loading } = useFetcher<{ data: QuestionComponentType }>(
     {
-      action: `/resources/questions/${id}/${vote ? "unvote" : "vote"}`,
+      action: `/resources/${type}/${id}/${vote ? "unvote" : "vote"}`,
       method: "post",
       onSuccess: (data) => {
         if (type === ContentEnum.question && data.submission)
@@ -46,14 +46,16 @@ const Vote = ({
     handleClick();
   };
   return (
-    <Button
-      disabled={loading}
-      onClick={handleButtonClick}
-      sx={{ border: 0, borderRadius: 0, width: "100%" }}
-    >
-      {vote ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+    <div className="flex flex-row items-center gap-1">
+      <IconButton sx={{ p: 0 }} disabled={loading} onClick={handleButtonClick}>
+        {vote ? (
+          <FavoriteIcon sx={{ width: 20 }} />
+        ) : (
+          <FavoriteBorderIcon sx={{ width: 20 }} />
+        )}
+      </IconButton>
       {!!totalVote && <p className="text-md text-primary-v2">{totalVote}</p>}
-    </Button>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { type SerializeFrom } from "@remix-run/node";
 import Content from "../Content";
+import { ContentEnum } from "~/types/content";
 
 export const answerSelect = (userId?: string) => {
   return {
@@ -31,7 +32,7 @@ const Answer = ({ answer }: { answer: AnswerComponentType }) => {
   if (!answer) return <></>;
   return (
     <div className="flex flex-col w-full p-4 gap-2 border-b-[1px]">
-      <Content content={answer} />
+      <Content type={ContentEnum.answer} content={answer} />
     </div>
   );
 };

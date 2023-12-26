@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useContext } from "react";
 import {
   QuestionDetailContext,
@@ -11,12 +11,9 @@ const Comment = ({ questionId }: { questionId: string }) => {
     QuestionDetailContext
   ) as QuestionDetailContextType;
   return (
-    <Button
-      onClick={() => getAnswers(questionId)}
-      sx={{ border: 0, borderRadius: 0, width: "100%" }}
-    >
-      <ChatBubbleOutlineIcon />
-    </Button>
+    <IconButton sx={{ p: 0 }} onClick={() => getAnswers(questionId)}>
+      <ChatBubbleOutlineIcon sx={{ width: 20 }} />
+    </IconButton>
   );
 };
 

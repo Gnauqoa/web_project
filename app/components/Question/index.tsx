@@ -2,8 +2,6 @@ import { Prisma } from "@prisma/client";
 import { type SerializeFrom } from "@remix-run/node";
 import Content from "../Content";
 import { useState } from "react";
-import Comment from "./Comment";
-import Vote from "./Vote";
 import { ContentEnum } from "~/types/content";
 
 export const questionSelect = (userId?: string) =>
@@ -37,17 +35,7 @@ const Question = ({ question }: { question: QuestionComponentType }) => {
   if (!currentQuestion) return <></>;
   return (
     <div className="flex flex-col w-full p-4 gap-2 border-b-[1px] border-gray-300">
-      <Content content={currentQuestion} />
-      <div className="flex flex-row items-center">
-        <Vote
-          type={ContentEnum.question}
-          id={question.id}
-          onNewState={() => {}}
-          totalVote={question.vote}
-          votedBy={question.votedBy.map((v) => v.userId)}
-        />
-        <Comment questionId={currentQuestion.id} />
-      </div>
+      <Content type={ContentEnum.question} content={currentQuestion} />
     </div>
   );
 };

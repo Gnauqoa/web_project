@@ -1,4 +1,4 @@
 export enum ContentEnum {
-  "question" = "question",
-  "answer" = "answer",
+  "question" = "questions",
+  "answer" = "answers",
 }
