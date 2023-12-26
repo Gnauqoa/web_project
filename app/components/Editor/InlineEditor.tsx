@@ -1,5 +1,6 @@
 import { Button, TextareaAutosize, Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
+import { twMerge } from "tailwind-merge";
 
 const InlineEditor = ({
   inputProps,
@@ -30,7 +31,10 @@ const InlineEditor = ({
         <TextareaAutosize
           {...inputProps}
           ref={textArea}
-          className={"w-full text-sm outline-none transition-colors px-3 py-2"}
+          className={twMerge(
+            "w-full text-sm outline-none transition-colors px-3 py-2",
+            inputProps?.className
+          )}
         />
         {errors &&
           errors.map((error, index) => (

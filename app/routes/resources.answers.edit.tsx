@@ -40,6 +40,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         content: submission.value.content,
         userId: userId,
       },
+
       select: answerSelect,
     });
     return json({ submission: answer, status: "success" }, { status: 201 });

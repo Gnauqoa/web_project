@@ -81,6 +81,7 @@ const QuestionEditor = ({
       <InlineEditor
         onClose={onClose}
         inputProps={{
+          className: " min-h-[80px]",
           value: value,
           onChange: (e) => setValue(e.currentTarget.value),
           name: "content",
