@@ -9,7 +9,7 @@ import { EditorType } from "~/components/Editor";
 import AnswerEditor from "~/components/Question/AddAnswer";
 import CloseIcon from "@mui/icons-material/Close";
 const Desktop = () => {
-  const { loading, questionId, answers, setAnswers, handleClose } = useContext(
+  const { loading, questionId, setAnswers, handleClose } = useContext(
     QuestionDetailContext
   ) as QuestionDetailContextType;
 
@@ -25,7 +25,7 @@ const Desktop = () => {
             <CloseIcon />
           </IconButton>
         </div>
-        {loading || !answers.length ? (
+        {loading ? (
           <div className="flex flex-col items-center">
             <CircularProgress />
           </div>

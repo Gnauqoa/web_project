@@ -41,6 +41,7 @@ model User {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   VoteQuestion VoteQuestion[]
+  VoteAnswer   VoteAnswer[]
 }
 
 model Password {
@@ -103,8 +104,22 @@ model Answer {
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
 
+  user      User         @relation(fields: [userId], references: [id])
+  userId    String
+  vote      Int          @default(0)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  votedBy   VoteAnswer[]
+}
+
+model VoteAnswer {
+  id String @id @unique @default(cuid())
+
   user   User   @relation(fields: [userId], references: [id])
   userId String
+
+  answer   Answer @relation(fields: [answerId], references: [id])
+  answerId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
