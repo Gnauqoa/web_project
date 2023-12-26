@@ -2,22 +2,25 @@ import { Prisma } from "@prisma/client";
 import { type SerializeFrom } from "@remix-run/node";
 import Content from "../Content";
 
-export const answerSelect: Prisma.AnswerSelect = {
-  id: true,
-  content: true,
-  user: {
-    select: {
-      id: true,
-      name: true,
-      avatarId: true,
+export const answerSelect = (userId?: string) => {
+  return {
+    id: true,
+    content: true,
+    user: {
+      select: {
+        id: true,
+        name: true,
+        avatarId: true,
+      },
     },
-  },
-  createdAt: true,
+    votedBy: userId ? { where: { userId }, select: { id: true } } : false,
+    createdAt: true,
+  } as Prisma.AnswerSelect;
 };
 
 const answerWithUser = Prisma.validator<Prisma.AnswerDefaultArgs>()({
   include: { user: true, question: false },
-  select: answerSelect,
+  select: answerSelect(),
 });
 
 export type AnswerComponentType = SerializeFrom<
