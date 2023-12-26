@@ -16,20 +16,7 @@ export const questionSelect: Prisma.QuestionSelect = {
       avatarId: true,
     },
   },
-  answers: {
-    select: {
-      id: true,
-      content: true,
-      user: {
-        select: {
-          id: true,
-          name: true,
-          avatarId: true,
-        },
-      },
-      createdAt: true,
-    },
-  },
+
   createdAt: true,
 };
 
