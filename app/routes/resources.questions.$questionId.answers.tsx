@@ -12,7 +12,7 @@ export const loader = async ({ params }: ActionFunctionArgs) => {
     select: answerSelect,
   });
   return {
-    data: { items: answers },
+    submission: { data: { items: answers } },
     status: StatusResponse.success,
     message: "",
   };

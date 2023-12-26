@@ -71,7 +71,7 @@ function useFetcher<T>({
     fetcher,
     handleSubmit,
     handleSubmitWithData,
-    loading: fetcher.state === "submitting",
+    loading: fetcher.state !== "idle",
   };
 }
 

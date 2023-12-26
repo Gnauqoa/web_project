@@ -1,10 +1,14 @@
 import { Prisma } from "@prisma/client";
 import { type SerializeFrom } from "@remix-run/node";
 import Content from "../Content";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import {
+  QuestionDetailContext,
+  QuestionDetailContextType,
+} from "../QuestionDetail/Context";
 
 export const questionSelect: Prisma.QuestionSelect = {
   id: true,
@@ -30,6 +34,9 @@ export type QuestionComponentType = SerializeFrom<
 
 const Question = ({ question }: { question: QuestionComponentType }) => {
   const [currentQuestion] = useState(question);
+  const { getAnswers } = useContext(
+    QuestionDetailContext
+  ) as QuestionDetailContextType;
   if (!currentQuestion) return <></>;
   return (
     <div className="flex flex-col w-full p-4 gap-2 border-b-[1px] border-gray-300">
@@ -38,7 +45,10 @@ const Question = ({ question }: { question: QuestionComponentType }) => {
         <Button sx={{ border: 0, borderRadius: 0, width: "100%" }}>
           <FavoriteBorderIcon />
         </Button>
-        <Button sx={{ border: 0, borderRadius: 0, width: "100%" }}>
+        <Button
+          onClick={() => getAnswers(question.id)}
+          sx={{ border: 0, borderRadius: 0, width: "100%" }}
+        >
           <ChatBubbleOutlineIcon />
         </Button>
       </div>

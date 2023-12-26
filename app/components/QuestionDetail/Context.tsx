@@ -7,7 +7,7 @@ import React, {
 import { type AnswerComponentType } from "../Answer";
 import useFetcher from "~/hooks/useFetcher";
 // Define the ContextType
-type ContextType = {
+export type QuestionDetailContextType = {
   questionId: string;
   setQuestionId: React.Dispatch<React.SetStateAction<string>>;
   answers: AnswerComponentType[];
@@ -17,7 +17,7 @@ type ContextType = {
 };
 
 // Create the initial context value
-const initialContextValue: ContextType = {
+const initialContextValue: QuestionDetailContextType = {
   questionId: "",
   setQuestionId: () => {},
   answers: [],
@@ -28,7 +28,7 @@ const initialContextValue: ContextType = {
 
 // Create the QuestionDetailContext
 export const QuestionDetailContext =
-  createContext<ContextType>(initialContextValue);
+  createContext<QuestionDetailContextType>(initialContextValue);
 
 // Create the ContextProvider component
 export const QuestionDetailContextProvider = ({
@@ -43,7 +43,9 @@ export const QuestionDetailContextProvider = ({
   }>({
     method: "get",
     onSuccess: (data) => {
-      if (data.submission) setAnswers(data.submission?.data.items);
+      if (data.submission) {
+        setAnswers(data.submission?.data.items);
+      }
     },
   });
   const getAnswers = (questionId: string) => {
