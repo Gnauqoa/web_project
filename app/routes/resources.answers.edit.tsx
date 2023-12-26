@@ -41,7 +41,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         userId: userId,
       },
 
-      select: answerSelect,
+      select: answerSelect(userId),
     });
     return json({ submission: answer, status: "success" }, { status: 201 });
   }
@@ -52,7 +52,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     data: {
       content: submission.value.content,
     },
-    select: answerSelect,
+    select: answerSelect(userId),
   });
   return json({ submission: answer, status: "success" }, { status: 201 });
 };
