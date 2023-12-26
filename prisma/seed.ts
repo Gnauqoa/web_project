@@ -4,7 +4,6 @@ import { createPassword, createUser } from "tests/db-utils";
 import { prisma } from "~/utils/db.server";
 import { getPasswordHash } from "~/utils/auth.server";
 
-
 async function seed() {
   console.log("🌱 Seeding...");
   console.time(`🌱 Database has been seeded`);
@@ -35,7 +34,7 @@ async function seed() {
     },
   });
   console.timeEnd(
-    `🐨 Created user "kody" with the password "123456" and admin role`
+    `🐨 Created user "kody@kcd.dev" with the password "123456" and admin role`
   );
 
   const totalUsers = 40;
@@ -61,7 +60,7 @@ async function seed() {
                 ),
               },
             },
-
+            
             questions: {
               create: {
                 content: faker.lorem.sentence(),
@@ -76,40 +75,33 @@ async function seed() {
   ).then((users) => users.filter(Boolean));
   console.timeEnd(`👤 Created ${users.length} users...`);
 
-  const questions = await prisma.question
-    .findMany({
-      select: { id: true },
-    })
-    .then((questions) => questions);
+  const kodyUser = await prisma.user.findUnique({
+    where: { email: "kody@kcd.dev" },
+    select: { id: true },
+  });
 
-  await prisma.user
-    .findMany({
-      select: { id: true },
-    })
-    .then((users) => {
-      Array.from(users, async (user) => {
-        return Array.from({ length: 1 }, async () => {
-          const answer = await prisma.answer.create({
-            data: {
-              question: {
-                connect: {
-                  id: questions[0].id,
-                  // faker.number.int({ min: 0, max: questions.length - 1 })
-                },
-              },
-              user: {
-                connect: {
-                  id: user.id,
-                },
-              },
-              content: faker.lorem.paragraphs(),
-              ...getCreatedAndUpdated(),
+  const questions = await prisma.question.findMany({
+    select: { id: true },
+  });
+  if (kodyUser)
+    await Promise.all(
+      questions.map(async (question) => {
+        await prisma.answer.create({
+          data: {
+            question: {
+              connect: { id: question.id },
             },
-          });
-          return answer;
+            user: {
+              connect: { id: kodyUser.id },
+            },
+            content: faker.lorem.paragraphs(),
+            ...getCreatedAndUpdated(),
+          },
         });
-      });
-    });
+      })
+    );
+
+  console.timeEnd(`🌱 Database has been seeded`);
 
   console.timeEnd(`👤 Created ${users.length} answers...`);
 
