@@ -7,7 +7,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import {
   QuestionDetailContext,
-  QuestionDetailContextType,
+  type QuestionDetailContextType,
 } from "../QuestionDetail/Context";
 
 export const questionSelect: Prisma.QuestionSelect = {

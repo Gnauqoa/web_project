@@ -9,7 +9,7 @@ import { EditorType } from "~/components/Editor";
 import AnswerEditor from "~/components/Question/AddAnswer";
 
 const Desktop = () => {
-  const { loading, questionId, answers } = useContext(
+  const { loading, questionId, answers, setAnswers } = useContext(
     QuestionDetailContext
   ) as QuestionDetailContextType;
 
@@ -23,7 +23,11 @@ const Desktop = () => {
         ) : (
           <div className="flex flex-col w-full">
             <div className="px-4">
-              <AnswerEditor parentId={questionId} editorType={EditorType.new} />
+              <AnswerEditor
+                onSuccess={(data) => setAnswers((items) => [data, ...items])}
+                parentId={questionId}
+                editorType={EditorType.new}
+              />
             </div>
             <Answers />
           </div>
