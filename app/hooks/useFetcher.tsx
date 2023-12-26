@@ -46,8 +46,14 @@ function useFetcher<T>({
   const handleSubmit = () => {
     fetcher.submit(data, { method, action, encType });
   };
-  const handleSubmitWithData = (_data: any) => {
-    fetcher.submit(_data, { method, action, encType });
+  const handleSubmitWithData = ({
+    _data,
+    _action,
+  }: {
+    _data?: any | null | undefined;
+    _action?: string;
+  }) => {
+    fetcher.submit(_data, { method, action: _action || action, encType });
   };
   useEffect(() => {
     if (!fetcher.data) return;
