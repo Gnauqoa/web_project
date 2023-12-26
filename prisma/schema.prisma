@@ -78,6 +78,7 @@ model Question {
   vote         Int            @default(0)
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  interactedAt DateTime?      @updatedAt
   VoteQuestion VoteQuestion[]
 }
 
