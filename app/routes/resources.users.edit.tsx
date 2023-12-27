@@ -54,7 +54,7 @@ export const action = async ({ request }: DataFunctionArgs) => {
       currentPassword,
       user?.password?.hash || ""
     );
-    if (isValid) {
+    if (!isValid) {
       return json(
         {
           status: StatusResponse.error,
