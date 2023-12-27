@@ -17,7 +17,7 @@ const Desktop = () => {
     <div className="max-w-[20vw] min-w-[20vw]">
       <div
         style={{ height: "calc(100vh - 68.5px)" }}
-        className="flex flex-col max-w-[20vw] min-w-[20vw] overflow-y-auto fixed pt-4"
+        className="flex flex-col max-w-[20vw] min-w-[20vw] overflow-y-auto fixed pt-4 border-x-[1px] border-gray-300"
       >
         <div className="flex flex-row items-center px-4">
           <Typography sx={{ fontSize: 18 }}>Answer</Typography>
