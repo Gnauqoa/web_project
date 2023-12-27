@@ -29,8 +29,14 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-  const logout = useLogout()
-  const settings = [{ title: "Logout", onClick: () => logout() }];
+  const logout = useLogout();
+  const settings = [
+    {
+      title: "Profile",
+      onClick: () => navigate(PATH_PAGE.user.root(user?.id || "")),
+    },
+    { title: "Logout", onClick: () => logout() },
+  ];
 
   const navigate = useNavigate();
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -53,7 +59,7 @@ function ResponsiveAppBar() {
       <Toolbar disableGutters>
         <div
           onClick={() => navigate(PATH_PAGE.root)}
-          className="flex flex-row items-center"
+          className="flex flex-row items-center cursor-pointer"
         >
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
@@ -70,7 +76,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            WEBPACK
           </Typography>
         </div>
 
@@ -135,7 +141,7 @@ function ResponsiveAppBar() {
             textDecoration: "none",
           }}
         >
-          LOGO
+          WEBPACK
         </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
           {pages.map((page) => (
@@ -178,9 +184,13 @@ function ResponsiveAppBar() {
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting.title} onClick={() => { 
-                setting.onClick();
-                handleCloseUserMenu()}}>
+              <MenuItem
+                key={setting.title}
+                onClick={() => {
+                  setting.onClick();
+                  handleCloseUserMenu();
+                }}
+              >
                 <Typography textAlign="center">{setting.title}</Typography>
               </MenuItem>
             ))}
