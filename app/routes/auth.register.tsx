@@ -1,7 +1,6 @@
 import { useForm } from "@conform-to/react";
 import { getFieldsetConstraint, parse } from "@conform-to/zod";
 import { Form, Link } from "@remix-run/react";
-import React from "react";
 import { PATH_PAGE } from "~/config/path";
 import { onboardingFormSchema } from "./resources.auth.register";
 

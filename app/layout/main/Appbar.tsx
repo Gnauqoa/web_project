@@ -14,12 +14,12 @@ import { useOptionalUser } from "~/utils/user";
 import { getUserImgSrc } from "~/utils/misc";
 import { useNavigate } from "@remix-run/react";
 import { PATH_PAGE } from "~/config/path";
+import useLogout from "~/hooks/useLogout";
 
 const pages = [
   { title: "Questions", path: PATH_PAGE.user.question },
   { title: "Answers", path: PATH_PAGE.user.answer },
 ];
-const settings = ["Logout"];
 
 function ResponsiveAppBar() {
   const user = useOptionalUser();
@@ -29,6 +29,9 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
+  const logout = useLogout()
+  const settings = [{ title: "Logout", onClick: () => logout() }];
+
   const navigate = useNavigate();
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -175,8 +178,10 @@ function ResponsiveAppBar() {
             onClose={handleCloseUserMenu}
           >
             {settings.map((setting) => (
-              <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">{setting}</Typography>
+              <MenuItem key={setting.title} onClick={() => { 
+                setting.onClick();
+                handleCloseUserMenu()}}>
+                <Typography textAlign="center">{setting.title}</Typography>
               </MenuItem>
             ))}
           </Menu>
