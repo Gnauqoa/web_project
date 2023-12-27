@@ -1,36 +1,8 @@
-import { Prisma } from "@prisma/client";
-import {
-  json,
-  type ActionFunctionArgs,
-  type SerializeFrom,
-} from "@remix-run/node";
+import { loader } from "~/routes/resources.users.$userId";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { StatusResponse } from "~/hooks/useFetcher";
 import Info from "~/section/profile/info";
 import Tabs from "~/section/profile/tabs";
-import { prisma } from "~/utils/db.server";
-
-export const userSelect: Prisma.UserSelect = {
-  id: true,
-  name: true,
-  avatarId: true,
-};
-
-const UserInfo = Prisma.validator<Prisma.QuestionDefaultArgs>()({
-  select: userSelect,
-});
-
-export type UserInfoType = SerializeFrom<
-  Prisma.UserGetPayload<typeof UserInfo>
->;
-export const loader = async ({ params }: ActionFunctionArgs) => {
-  const { userId } = params;
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: userSelect,
-  });
-  return json({ submission: { data: user }, status: StatusResponse.success });
-};
+export { loader };
 
 const User = () => {
   const data = useLoaderData<typeof loader>();
