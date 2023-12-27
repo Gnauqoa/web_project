@@ -6,6 +6,7 @@ import { authGuard, getPasswordHash } from "~/utils/auth.server";
 import { prisma } from "~/utils/db.server";
 import { nameSchema, passwordSchema } from "~/utils/user-validation";
 import { userSelect } from "./resources.users.$userId";
+import bcrypt from "bcryptjs";
 
 export const EditUserSchema = z.object({
   name: nameSchema.optional(),
@@ -36,8 +37,33 @@ export const action = async ({ request }: DataFunctionArgs) => {
       { status: 400 }
     );
   }
-  const { name, bio, newPassword } = submission.value;
+  const { name, bio, newPassword, currentPassword } = submission.value;
 
+  if (newPassword) {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { password: { select: { hash: true } } },
+    });
+
+    if (!currentPassword)
+      return json(
+        { status: StatusResponse.error, message: "Missing current password" },
+        { status: 400 }
+      );
+    const isValid = await bcrypt.compare(
+      currentPassword,
+      user?.password?.hash || ""
+    );
+    if (isValid) {
+      return json(
+        {
+          status: StatusResponse.error,
+          message: "Current password does not match",
+        },
+        { status: 400 }
+      );
+    }
+  }
   const updatedUser = await prisma.user.update({
     select: userSelect(),
     where: { id: userId },

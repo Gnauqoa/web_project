@@ -98,7 +98,6 @@ export async function verifyLogin(
     email: userWithPassword.email,
   };
 }
-
 export async function getPasswordHash(password: string) {
   const hash = await bcrypt.hash(password, 10);
   return hash;
@@ -150,9 +149,9 @@ export async function signup({
   return session;
 }
 export async function requireAnonymous(request: Request) {
-	await authenticator.isAuthenticated(request, {
-		successRedirect: '/',
-	})
+  await authenticator.isAuthenticated(request, {
+    successRedirect: "/",
+  });
 }
 
 export async function requireUserId(
