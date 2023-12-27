@@ -7,6 +7,8 @@ import { ContentEnum } from "~/types/content";
 import Vote from "./Vote";
 import Comment from "./Comment";
 import Copy from "./Copy";
+import Zoom from "./Zoom";
+import { useLocation } from "@remix-run/react";
 
 export type ContentProps =
   | {
@@ -15,7 +17,8 @@ export type ContentProps =
     }
   | { type: ContentEnum.answer; content: AnswerComponentType };
 
-const Content: React.FC<ContentProps> = ({ content, type }) => {
+const Content = ({ content, type }: ContentProps) => {
+  const location = useLocation();
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row gap-1 ">
@@ -39,10 +42,10 @@ const Content: React.FC<ContentProps> = ({ content, type }) => {
           votedBy={content.votedBy.map((v) => v.userId)}
         />
         {type === ContentEnum.question && <Comment questionId={content.id} />}
-        {type === ContentEnum.answer ||
-          (type === ContentEnum.question && (
-            <Copy content={content} type={type} />
-          ))}
+        {(type === ContentEnum.answer || type === ContentEnum.question) && (
+          <Copy content={content} type={type} />
+        )}
+        <Zoom content={content} type={type} />
       </div>
     </div>
   );

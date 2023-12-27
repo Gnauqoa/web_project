@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCopyToClipboard } from "~/hooks/useCopyToClipboard";
 import LinkIcon from "@mui/icons-material/Link";
 import { type ContentProps } from ".";
+
 const Copy = ({ content, type }: ContentProps) => {
   const [copied, setCopied] = useState<boolean>();
   const [, copy] = useCopyToClipboard();
