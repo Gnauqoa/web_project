@@ -6,6 +6,7 @@ import { type AnswerComponentType } from "../Answer";
 import { ContentEnum } from "~/types/content";
 import Vote from "./Vote";
 import Comment from "./Comment";
+import Copy from "./Copy";
 
 export type ContentProps =
   | {
@@ -38,6 +39,10 @@ const Content: React.FC<ContentProps> = ({ content, type }) => {
           votedBy={content.votedBy.map((v) => v.userId)}
         />
         {type === ContentEnum.question && <Comment questionId={content.id} />}
+        {type === ContentEnum.answer ||
+          (type === ContentEnum.question && (
+            <Copy content={content} type={type} />
+          ))}
       </div>
     </div>
   );
