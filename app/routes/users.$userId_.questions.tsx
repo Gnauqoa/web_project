@@ -10,7 +10,7 @@ const Questions = () => {
   return (
     <div className="flex flex-col w-full h-full">
       {data.submission.data.items.length === 0 && (
-        <Typography sx={{ fontSize: 18 }}>
+        <Typography sx={{ fontSize: 18, textAlign: "center" }}>
           Có vẻ bạn chưa có câu hỏi nào
         </Typography>
       )}

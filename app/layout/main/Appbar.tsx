@@ -125,13 +125,19 @@ function ResponsiveAppBar() {
             ))}
           </Menu>
         </Box>
-        <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+
+        <AdbIcon
+          onClick={() => navigate(PATH_PAGE.root)}
+          sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+        />
         <Typography
+          onClick={() => navigate(PATH_PAGE.root)}
           variant="h5"
           noWrap
           component="a"
           sx={{
             mr: 2,
+            cursor: "pointer",
             display: { xs: "flex", md: "none" },
             flexGrow: 1,
             fontFamily: "monospace",
