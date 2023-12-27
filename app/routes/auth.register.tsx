@@ -1,8 +1,19 @@
-import { Link } from "@remix-run/react";
+import { useForm } from "@conform-to/react";
+import { getFieldsetConstraint, parse } from "@conform-to/zod";
+import { Form, Link } from "@remix-run/react";
 import React from "react";
 import { PATH_PAGE } from "~/config/path";
+import { onboardingFormSchema } from "./resources.auth.register";
 
 const Register = () => {
+  const [form, fields] = useForm({
+    id: "onboarding",
+    constraint: getFieldsetConstraint(onboardingFormSchema),
+    onValidate({ formData }) {
+      return parse(formData, { schema: onboardingFormSchema });
+    },
+    shouldRevalidate: "onBlur",
+  });
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -11,7 +22,12 @@ const Register = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <Form
+              method="POST"
+              className="relative flex h-full w-full flex-col items-center justify-center gap-6"
+              {...form.props}
+            >
+              {" "}
               <div>
                 <label
                   htmlFor="email"
@@ -66,20 +82,6 @@ const Register = () => {
                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                   />
                 </div>
-                <div className="ml-3 text-sm">
-                  <label
-                    htmlFor="terms"
-                    className="font-light text-gray-500 dark:text-gray-300"
-                  >
-                    I accept the{" "}
-                    <a
-                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      href="#"
-                    >
-                      Terms and Conditions
-                    </a>
-                  </label>
-                </div>
               </div>
               <button
                 type="submit"
@@ -96,7 +98,7 @@ const Register = () => {
                   Login here
                 </Link>
               </p>
-            </form>
+            </Form>
           </div>
         </div>
       </div>

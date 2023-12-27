@@ -117,6 +117,44 @@ export async function getUserId(request: Request) {
   }
   return session.userId;
 }
+
+export async function signup({
+  email,
+  password,
+  name,
+}: {
+  email: User["email"];
+  name: User["name"];
+  password: string;
+}) {
+  const hashedPassword = await getPasswordHash(password);
+
+  const session = await prisma.session.create({
+    data: {
+      expirationDate: new Date(Date.now() + SESSION_EXPIRATION_TIME),
+      user: {
+        create: {
+          email: email.toLowerCase(),
+          name,
+          verified: true,
+          password: {
+            create: {
+              hash: hashedPassword,
+            },
+          },
+        },
+      },
+    },
+    select: { id: true, expirationDate: true },
+  });
+  return session;
+}
+export async function requireAnonymous(request: Request) {
+	await authenticator.isAuthenticated(request, {
+		successRedirect: '/',
+	})
+}
+
 export async function requireUserId(
   request: Request,
   { redirectTo }: { redirectTo?: string | null } = {}
