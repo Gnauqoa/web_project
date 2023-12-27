@@ -43,7 +43,11 @@ const EditProfile = ({ handleCancel }: { handleCancel: () => void }) => {
       ) : (
         <div className="flex flex-row gap-3">
           <div>
-            <Button sx={{ textTransform: "none" }} onClick={handleSubmit}>
+            <Button
+              variant="contained"
+              sx={{ textTransform: "none" }}
+              onClick={handleSubmit}
+            >
               Lưu
             </Button>
           </div>

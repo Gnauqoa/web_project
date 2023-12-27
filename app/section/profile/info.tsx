@@ -21,12 +21,17 @@ const Info = ({ user }: { user: UserInfoType }) => {
         <div className="flex flex-row w-full">
           <div className="flex flex-col">
             <Typography sx={{ fontSize: 16 }}>{user.name}</Typography>
+            <Typography sx={{ fontSize: 10 }}>{user.bio}</Typography>
             {currentUser?.id === user.id && (
               <Typography sx={{ fontSize: 12 }}>{user.email}</Typography>
             )}
           </div>
           <div className="ml-auto">
-            <Button onClick={handleEdit} sx={{ textTransform: "none" }}>
+            <Button
+              variant="contained"
+              onClick={handleEdit}
+              sx={{ textTransform: "none" }}
+            >
               Sửa
             </Button>
           </div>
