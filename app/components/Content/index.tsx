@@ -3,12 +3,13 @@ import { Avatar } from "..";
 import { Typography } from "@mui/material";
 import { type QuestionComponentType } from "../Question";
 import { type AnswerComponentType } from "../Answer";
-import { ContentEnum } from "~/types/content";
-import Vote from "./Vote";
-import Comment from "./Comment";
-import Copy from "./Copy";
-import Zoom from "./Zoom";
-import { useLocation } from "@remix-run/react";
+import { type ContentEnum } from "~/types/content";
+import Action from "./Action";
+import useToggle from "~/hooks/useToggle";
+import QuestionEditor from "../AddQuestion";
+import { EditorType } from "../Editor";
+import EditContent from "./EditContent";
+import { useState } from "react";
 
 export type ContentProps =
   | {
@@ -17,8 +18,13 @@ export type ContentProps =
     }
   | { type: ContentEnum.answer; content: AnswerComponentType };
 
-const Content = ({ content, type }: ContentProps) => {
-  const location = useLocation();
+const Content = ({ content: defaultContent, type }: ContentProps) => {
+  const [content, setContent] = useState(defaultContent);
+  const {
+    toggle: mode,
+    handleOpen: onEdit,
+    handleClose: onNormal,
+  } = useToggle({});
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row gap-1 ">
@@ -31,22 +37,26 @@ const Content = ({ content, type }: ContentProps) => {
             {dayjs(new Date(content.createdAt || "")).fromNow()}
           </Typography>
         </div>
+        <div className="ml-auto">
+          <EditContent content={content} onClick={onEdit} />
+        </div>
       </div>
-      <Typography sx={{ fontSize: 14 }}>{content.content}</Typography>
-      <div className="flex flex-row items-center gap-2">
-        <Vote
-          type={type}
+      {mode ? (
+        <QuestionEditor
+          onSuccess={(data) => {
+            setContent(data);
+            onNormal();
+          }}
+          defaultValue={content.content}
+          editorType={EditorType.edit}
           id={content.id}
-          onNewState={() => {}}
-          totalVote={content.vote}
-          votedBy={content.votedBy.map((v) => v.userId)}
         />
-        {type === ContentEnum.question && <Comment questionId={content.id} />}
-        {(type === ContentEnum.answer || type === ContentEnum.question) && (
-          <Copy content={content} type={type} />
-        )}
-        <Zoom content={content} type={type} />
-      </div>
+      ) : (
+        <div className="flex flex-row">
+          <Typography sx={{ fontSize: 14 }}>{content.content}</Typography>
+        </div>
+      )}
+      <Action content={content} type={type} />
     </div>
   );
 };

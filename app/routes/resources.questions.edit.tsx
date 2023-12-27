@@ -1,6 +1,7 @@
 import { parse } from "@conform-to/zod";
 import { json, type ActionFunctionArgs } from "@remix-run/node";
 import { z } from "zod";
+import { questionSelect } from "~/components/Question";
 import { authGuard } from "~/utils/auth.server";
 import { prisma } from "~/utils/db.server";
 
@@ -36,6 +37,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       data: {
         content: submission.value.content,
       },
+      select: questionSelect(userId),
     });
     return json({ submission: question, status: "success" }, { status: 201 });
   }
@@ -44,6 +46,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       content: submission.value.content,
       userId: userId,
     },
+    select: questionSelect(userId),
   });
   return json({ submission: question, status: "success" }, { status: 201 });
 };
