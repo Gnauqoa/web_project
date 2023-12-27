@@ -35,11 +35,11 @@ export type QuestionComponentType = SerializeFrom<
 >;
 
 const Question = ({ question }: { question: QuestionComponentType }) => {
-  const [currentQuestion] = useState(question);
   const { questionId } = useContext(
     QuestionDetailContext
   ) as QuestionDetailContextType;
-  if (!currentQuestion) return <></>;
+  const [isDelete, setIsDelete] = useState(false);
+  if (isDelete) return <></>;
   return (
     <Box
       sx={{
@@ -50,7 +50,7 @@ const Question = ({ question }: { question: QuestionComponentType }) => {
         position: "relative",
       }}
     >
-      {questionId === currentQuestion.id && (
+      {questionId === question.id && (
         <Box
           sx={{
             position: "absolute",
@@ -62,7 +62,11 @@ const Question = ({ question }: { question: QuestionComponentType }) => {
         ></Box>
       )}
       <Stack sx={{ p: 4, gap: 2 }}>
-        <Content type={ContentEnum.question} content={currentQuestion} />
+        <Content
+          onDelete={() => setIsDelete(true)}
+          type={ContentEnum.question}
+          content={question}
+        />
       </Stack>
     </Box>
   );

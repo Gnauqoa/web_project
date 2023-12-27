@@ -8,9 +8,10 @@ import Action from "./Action";
 import useToggle from "~/hooks/useToggle";
 import QuestionEditor from "../AddQuestion";
 import { EditorType } from "../Editor";
-import EditContent from "./EditContent";
+import EditContent from "./Edit";
 import { useState } from "react";
 import AnswerEditor from "../Question/AddAnswer";
+import Delete from "./Delete";
 
 export type ContentProps =
   | {
@@ -19,13 +20,20 @@ export type ContentProps =
     }
   | { type: ContentEnum.answer; content: AnswerComponentType };
 
-const Content = ({ content: defaultContent, type }: ContentProps) => {
-  const [content, setContent] = useState(defaultContent);
+const Content = ({
+  content: defaultContent,
+  type,
+  onDelete,
+}: ContentProps & { onDelete: () => void }) => {
+  const [content, setContent] = useState<
+    QuestionComponentType | AnswerComponentType | null
+  >(defaultContent);
   const {
     toggle: mode,
     handleOpen: onEdit,
     handleClose: onNormal,
   } = useToggle({});
+  if (!content) return <></>;
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row gap-1 ">
@@ -38,8 +46,9 @@ const Content = ({ content: defaultContent, type }: ContentProps) => {
             {dayjs(new Date(content.createdAt || "")).fromNow()}
           </Typography>
         </div>
-        <div className="ml-auto">
+        <div className="ml-auto flex flex-row items-center gap-3">
           <EditContent content={content} onClick={onEdit} />
+          <Delete type={type} content={content} onSuccess={() => onDelete()} />
         </div>
       </div>
       {mode ? (

@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { type SerializeFrom } from "@remix-run/node";
 import Content from "../Content";
 import { ContentEnum } from "~/types/content";
+import { useState } from "react";
 
 export const answerSelect = (userId?: string) => {
   return {
@@ -30,10 +31,15 @@ export type AnswerComponentType = SerializeFrom<
 >;
 
 const Answer = ({ answer }: { answer: AnswerComponentType }) => {
-  if (!answer) return <></>;
+  const [isDelete, setIsDelete] = useState(false);
+  if (!answer || isDelete) return <></>;
   return (
     <div className="flex flex-col w-full p-4 gap-2 border-b-[1px]">
-      <Content type={ContentEnum.answer} content={answer} />
+      <Content
+        onDelete={() => setIsDelete(true)}
+        type={ContentEnum.answer}
+        content={answer}
+      />
     </div>
   );
 };
