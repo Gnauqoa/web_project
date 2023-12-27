@@ -20,7 +20,7 @@ export const questionSelect = (userId?: string) =>
         avatarId: true,
       },
     },
-
+    answers: { select: { id: true } },
     votedBy: userId ? { where: { userId }, select: { id: true } } : false,
     vote: true,
     createdAt: true,

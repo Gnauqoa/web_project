@@ -15,7 +15,12 @@ const Action = ({ type, content }: ContentProps) => {
         totalVote={content.vote}
         votedBy={content.votedBy.map((v) => v.userId)}
       />
-      {type === ContentEnum.question && <Comment questionId={content.id} />}
+      {type === ContentEnum.question && (
+        <Comment
+          totalAnswers={content.answers.length}
+          questionId={content.id}
+        />
+      )}
       {(type === ContentEnum.answer || type === ContentEnum.question) && (
         <Copy content={content} type={type} />
       )}

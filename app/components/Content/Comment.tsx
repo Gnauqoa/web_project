@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import { useContext } from "react";
 import {
   QuestionDetailContext,
@@ -6,14 +6,25 @@ import {
 } from "~/layout/main/QuestionDetail/Context";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
-const Comment = ({ questionId }: { questionId: string }) => {
+const Comment = ({
+  questionId,
+  totalAnswers,
+}: {
+  questionId: string;
+  totalAnswers: number;
+}) => {
   const { getAnswers } = useContext(
     QuestionDetailContext
   ) as QuestionDetailContextType;
   return (
-    <IconButton sx={{ p: 0 }} onClick={() => getAnswers(questionId)}>
-      <ChatBubbleOutlineIcon sx={{ width: 20 }} />
-    </IconButton>
+    <div className="flex flex-row items-center gap-1">
+      <IconButton sx={{ p: 0 }} onClick={() => getAnswers(questionId)}>
+        <ChatBubbleOutlineIcon sx={{ width: 20 }} />
+      </IconButton>
+      {!!totalAnswers && (
+        <Typography sx={{ fontSize: 16 }}>{totalAnswers}</Typography>
+      )}
+    </div>
   );
 };
 
