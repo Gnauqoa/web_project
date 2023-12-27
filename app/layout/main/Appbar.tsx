@@ -8,7 +8,6 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useOptionalUser } from "~/utils/user";
@@ -58,7 +57,6 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -123,7 +121,6 @@ function ResponsiveAppBar() {
           variant="h5"
           noWrap
           component="a"
-          href="#app-bar-with-responsive-menu"
           sx={{
             mr: 2,
             display: { xs: "flex", md: "none" },
@@ -158,11 +155,9 @@ function ResponsiveAppBar() {
         </Box>
 
         <Box sx={{ flexGrow: 0 }}>
-          <Tooltip title="Open settings">
-            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src={getUserImgSrc(user?.avatarId)} />
-            </IconButton>
-          </Tooltip>
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar alt="Remy Sharp" src={getUserImgSrc(user?.avatarId)} />
+          </IconButton>
           <Menu
             sx={{ mt: "45px" }}
             id="menu-appbar"
