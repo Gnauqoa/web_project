@@ -12,6 +12,7 @@ const Info = ({ user }: { user: UserInfoType }) => {
     handleOpen: handleEdit,
     handleClose: handleNormal,
   } = useToggle({});
+  const isCurrentUser = currentUser?.id === user.id;
   return (
     <div className="p-4 flex flex-col md:flex-row gap-3">
       <Avatar user={user} sx={{ width: 80, height: 80 }} />
@@ -22,19 +23,21 @@ const Info = ({ user }: { user: UserInfoType }) => {
           <div className="flex flex-col">
             <Typography sx={{ fontSize: 16 }}>{user.name}</Typography>
             <Typography sx={{ fontSize: 10 }}>{user.bio}</Typography>
-            {currentUser?.id === user.id && (
+            {isCurrentUser && (
               <Typography sx={{ fontSize: 12 }}>{user.email}</Typography>
             )}
           </div>
-          <div className="ml-auto">
-            <Button
-              variant="contained"
-              onClick={handleEdit}
-              sx={{ textTransform: "none" }}
-            >
-              Sửa
-            </Button>
-          </div>
+          {isCurrentUser && (
+            <div className="ml-auto">
+              <Button
+                variant="contained"
+                onClick={handleEdit}
+                sx={{ textTransform: "none" }}
+              >
+                Edit
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>
