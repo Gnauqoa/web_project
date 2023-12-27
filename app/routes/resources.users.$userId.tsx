@@ -14,12 +14,14 @@ export const userSelect = (isPrivate?: boolean) => {
         id: true,
         name: true,
         avatarId: true,
+        bio: true,
       } as Prisma.UserSelect)
     : ({
         id: true,
         name: true,
         avatarId: true,
         email: true,
+        bio: true,
       } as Prisma.UserSelect);
 };
 

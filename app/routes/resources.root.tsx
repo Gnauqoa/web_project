@@ -22,7 +22,7 @@ export const loader = async ({ request }: ActionFunctionArgs) => {
       return redirect(PATH_PAGE.login);
   } else if (requestUrl.pathname.includes("/auth/login"))
     return redirect(PATH_PAGE.login);
-    
+
   const user = userId
     ? await time(
         () =>
@@ -35,6 +35,7 @@ export const loader = async ({ request }: ActionFunctionArgs) => {
               id: true,
               name: true,
               avatarId: true,
+              bio: true,
               questions: {
                 select: { id: true },
               },
