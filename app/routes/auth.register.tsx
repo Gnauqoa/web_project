@@ -1,16 +1,14 @@
 import { useForm } from "@conform-to/react";
 import { getFieldsetConstraint, parse } from "@conform-to/zod";
-import { Form, Link, useFetcher } from "@remix-run/react";
+import { Link, useFetcher } from "@remix-run/react";
 import { PATH_PAGE } from "~/config/path";
 import { onboardingFormSchema } from "./resources.auth.register";
-import { useEffect } from "react";
-import useToggle from "~/hooks/useToggle";
+
 import { type action } from "~/routes/resources.auth.register";
 
 const Register = () => {
-  const { toggle, handleToggle } = useToggle({});
   const loginFetcher = useFetcher<typeof action>();
-  const [form, fields] = useForm({
+  const [form] = useForm({
     id: "inline-login",
 
     constraint: getFieldsetConstraint(onboardingFormSchema),
