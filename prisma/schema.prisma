@@ -23,10 +23,10 @@ model Image {
 }
 
 model User {
-  id String @id @unique @default(cuid())
-
+  id    String  @id @unique @default(cuid())
+  bio   String?
   name  String
-  email String @unique
+  email String  @unique
 
   avatarId String?
   avatar   Image?  @relation(fields: [avatarId], references: [id])
