@@ -6,7 +6,7 @@ import { ContentEnum } from "~/types/content";
 import { Box, Stack } from "@mui/material";
 import {
   QuestionDetailContext,
-  QuestionDetailContextType,
+  type QuestionDetailContextType,
 } from "~/layout/main/QuestionDetail/Context";
 
 export const questionSelect = (userId?: string) =>
