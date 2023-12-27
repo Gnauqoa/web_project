@@ -29,7 +29,7 @@ model User {
   email String  @unique
 
   avatarId String?
-  avatar   Image?  @relation(fields: [avatarId], references: [id])
+  avatar   Image?  @relation(fields: [avatarId], references: [id], onDelete: Cascade)
 
   password Password?
   verified Boolean   @default(false)
@@ -49,7 +49,7 @@ model Password {
 
   hash String
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
   createdAt DateTime @default(now())
@@ -59,7 +59,7 @@ model Password {
 model Session {
   id String @id @unique @default(cuid())
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   expirationDate DateTime
@@ -72,7 +72,7 @@ model Question {
 
   content String
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   answers      Answer[]
@@ -86,10 +86,10 @@ model Question {
 model VoteQuestion {
   id String @id @unique @default(cuid())
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
 
   createdAt DateTime @default(now())
@@ -101,10 +101,10 @@ model Answer {
 
   content String
 
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
 
-  user      User         @relation(fields: [userId], references: [id])
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String
   vote      Int          @default(0)
   createdAt DateTime     @default(now())
@@ -115,10 +115,10 @@ model Answer {
 model VoteAnswer {
   id String @id @unique @default(cuid())
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  answer   Answer @relation(fields: [answerId], references: [id])
+  answer   Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
   answerId String
 
   createdAt DateTime @default(now())

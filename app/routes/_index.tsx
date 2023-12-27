@@ -1,5 +1,6 @@
 import { json, type ActionFunctionArgs } from "@remix-run/node";
 import { type ShouldRevalidateFunction, useLoaderData } from "@remix-run/react";
+import { useState } from "react";
 import { Question } from "~/components";
 import QuestionEditor from "~/components/AddQuestion";
 import { EditorType } from "~/components/Editor";
@@ -20,10 +21,14 @@ export const loader = async ({ request }: ActionFunctionArgs) => {
 
 const Home = () => {
   const data = useLoaderData<typeof loader>();
+  const [questions, setQuestions] = useState(data.questions);
   return (
     <div className="flex flex-col w-full h-full">
-      <QuestionEditor editorType={EditorType.new} />
-      {data.questions.map((question) => (
+      <QuestionEditor
+        onSuccess={(data) => setQuestions((prev) => [data, ...prev])}
+        editorType={EditorType.new}
+      />
+      {questions.map((question) => (
         <Question key={question.id} question={question} />
       ))}
     </div>

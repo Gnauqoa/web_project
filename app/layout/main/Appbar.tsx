@@ -5,7 +5,6 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,8 +14,11 @@ import { getUserImgSrc } from "~/utils/misc";
 import { useNavigate } from "@remix-run/react";
 import { PATH_PAGE } from "~/config/path";
 import useLogout from "~/hooks/useLogout";
+import SearchBar from "./QuestionDetail/SearchBar";
+import { Stack } from "@mui/material";
 
 const pages = [
+  { title: "Home", path: () => PATH_PAGE.root },
   { title: "Questions", path: PATH_PAGE.user.question },
   { title: "Answers", path: PATH_PAGE.user.answer },
 ];
@@ -89,7 +91,10 @@ function ResponsiveAppBar() {
             onClick={handleOpenNavMenu}
             color="inherit"
           >
-            <MenuIcon />
+            <AdbIcon
+              onClick={() => navigate(PATH_PAGE.root)}
+              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+            />
           </IconButton>
           <Menu
             disableScrollLock={true}
@@ -126,29 +131,6 @@ function ResponsiveAppBar() {
           </Menu>
         </Box>
 
-        <AdbIcon
-          onClick={() => navigate(PATH_PAGE.root)}
-          sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-        />
-        <Typography
-          onClick={() => navigate(PATH_PAGE.root)}
-          variant="h5"
-          noWrap
-          component="a"
-          sx={{
-            mr: 2,
-            cursor: "pointer",
-            display: { xs: "flex", md: "none" },
-            flexGrow: 1,
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
-          WEBPACK
-        </Typography>
         <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
           {pages.map((page) => (
             <Button
@@ -168,8 +150,8 @@ function ResponsiveAppBar() {
             </Button>
           ))}
         </Box>
-
-        <Box sx={{ flexGrow: 0 }}>
+        <SearchBar />
+        <Stack>
           <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
             <Avatar alt="Remy Sharp" src={getUserImgSrc(user?.avatarId)} />
           </IconButton>
@@ -201,7 +183,7 @@ function ResponsiveAppBar() {
               </MenuItem>
             ))}
           </Menu>
-        </Box>
+        </Stack>
       </Toolbar>
     </AppBar>
   );
