@@ -19,7 +19,11 @@ export const loader = async ({ params, request }: ActionFunctionArgs) => {
 const QuestionPage = () => {
   const data = useLoaderData<typeof loader>();
   if (!data.submission.data) return <></>;
-  return <Question question={data.submission.data} />;
+  return (
+    <div className="flex flex-col w-full h-full">
+      <Question question={data.submission.data} />
+    </div>
+  );
 };
 
 export default QuestionPage;
