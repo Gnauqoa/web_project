@@ -1,14 +1,16 @@
 import { Button, Stack } from "@mui/material";
-import { Link, useLocation } from "@remix-run/react";
+import { Link, useLocation, useParams } from "@remix-run/react";
 import { PATH_PAGE } from "~/config/path";
-import { useOptionalUser } from "~/utils/user";
 
 const Tabs = () => {
-  const user = useOptionalUser();
+  const params = useParams();
   return (
     <Stack sx={{ flexDirection: "row", width: "100%" }}>
-      <Tab title="Questions" to={PATH_PAGE.user.question(user?.id || "")} />
-      <Tab title="Answers" to={PATH_PAGE.user.answer(user?.id || "")} />
+      <Tab
+        title="Questions"
+        to={PATH_PAGE.user.question(params.userId || "")}
+      />
+      <Tab title="Answers" to={PATH_PAGE.user.answer(params.userId || "")} />
     </Stack>
   );
 };
