@@ -70,7 +70,7 @@ const Content = ({
             }}
             defaultValue={content.content}
             editorType={EditorType.edit}
-            parentId={content.id}
+            id={content.id}
           />
         )
       ) : (

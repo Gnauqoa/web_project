@@ -1,26 +1,32 @@
 import { useContext } from "react";
-import Answers from "./Answers";
 import {
   QuestionDetailContext,
   type QuestionDetailContextType,
 } from "../Context";
-import { CircularProgress, IconButton, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  Drawer,
+  IconButton,
+  Typography,
+} from "@mui/material";
 import { EditorType } from "~/components/Editor";
 import AnswerEditor from "~/components/Question/AddAnswer";
 import CloseIcon from "@mui/icons-material/Close";
+import Answers from "../Desktop/Answers";
 
-const Desktop = () => {
-  const { loading, questionId, setAnswers, handleClose } = useContext(
+const Mobile = () => {
+  const { loading, open, questionId, setAnswers, handleClose } = useContext(
     QuestionDetailContext
   ) as QuestionDetailContextType;
-
   return (
-    <div className="max-w-[20vw] min-w-[20vw]">
-      <div
-        style={{ height: "calc(100vh - 68.5px)" }}
-        className="flex flex-col max-w-[20vw] min-w-[20vw] overflow-y-auto fixed pt-4 border-x-[1px] border-gray-300"
-      >
-        <div className="flex flex-row items-center px-4">
+    <Drawer
+      transitionDuration={{ appear: 0.2, enter: 0.2, exit: 0.2 }}
+      onClose={handleClose}
+      open={open}
+      anchor="bottom"
+    >
+      <div className="flex flex-col h-[90vh] max-h-[90vh] overflow-auto">
+        <div className="flex flex-row items-center px-4 ">
           <Typography sx={{ fontSize: 18 }}>Answer</Typography>
           <IconButton onClick={handleClose} sx={{ ml: "auto" }}>
             <CloseIcon />
@@ -41,10 +47,10 @@ const Desktop = () => {
             </div>
             <Answers />
           </div>
-        )}
+        )}{" "}
       </div>
-    </div>
+    </Drawer>
   );
 };
 
-export default Desktop;
+export default Mobile;
