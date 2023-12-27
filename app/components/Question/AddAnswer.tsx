@@ -74,7 +74,7 @@ const AnswerEditor = ({
         <div className="absolute flex h-full w-full flex-col bg-white opacity-70"></div>
       )}
       {loading && <LinearProgress />}
-      <input name="questionId" hidden defaultValue={parentId} />
+      <input name="answerId" hidden defaultValue={parentId} />
       <InlineEditor
         onClose={onClose}
         inputProps={{

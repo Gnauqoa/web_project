@@ -19,7 +19,6 @@ const QuestionEditor = ({
   editorType,
   defaultValue = "",
   parentId,
-  id,
 }: EditorProps) => {
   const fetcher = useFetcher<typeof action>();
   const [value, setValue] = useState(defaultValue);

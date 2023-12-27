@@ -3,13 +3,14 @@ import { Avatar } from "..";
 import { Typography } from "@mui/material";
 import { type QuestionComponentType } from "../Question";
 import { type AnswerComponentType } from "../Answer";
-import { type ContentEnum } from "~/types/content";
+import { ContentEnum } from "~/types/content";
 import Action from "./Action";
 import useToggle from "~/hooks/useToggle";
 import QuestionEditor from "../AddQuestion";
 import { EditorType } from "../Editor";
 import EditContent from "./EditContent";
 import { useState } from "react";
+import AnswerEditor from "../Question/AddAnswer";
 
 export type ContentProps =
   | {
@@ -42,15 +43,27 @@ const Content = ({ content: defaultContent, type }: ContentProps) => {
         </div>
       </div>
       {mode ? (
-        <QuestionEditor
-          onSuccess={(data) => {
-            setContent(data);
-            onNormal();
-          }}
-          defaultValue={content.content}
-          editorType={EditorType.edit}
-          id={content.id}
-        />
+        type === ContentEnum.question ? (
+          <QuestionEditor
+            onSuccess={(data) => {
+              setContent(data);
+              onNormal();
+            }}
+            defaultValue={content.content}
+            editorType={EditorType.edit}
+            parentId={content.id}
+          />
+        ) : (
+          <AnswerEditor
+            onSuccess={(data) => {
+              setContent(data);
+              onNormal();
+            }}
+            defaultValue={content.content}
+            editorType={EditorType.edit}
+            parentId={content.id}
+          />
+        )
       ) : (
         <div className="flex flex-row">
           <Typography sx={{ fontSize: 14 }}>{content.content}</Typography>
