@@ -16,21 +16,6 @@ import { getFieldsetConstraint, parse } from "@conform-to/zod";
 import { PATH_PAGE } from "~/config/path";
 import useToggle from "~/hooks/useToggle";
 
-function Copyright(props: any) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Typography>Mui</Typography> {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 export default function SignIn({
   formError,
 }: {
@@ -151,7 +136,6 @@ export default function SignIn({
           </Grid>
         </loginFetcher.Form>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 }
